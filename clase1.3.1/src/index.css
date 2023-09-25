@@ -67,3 +67,12 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+img {
+  width: 100%;
+}
+
+.container {
+  display: grid;
+  gap: 20px;
+}

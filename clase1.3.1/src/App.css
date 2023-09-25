@@ -40,3 +40,8 @@
 .read-the-docs {
   color: #888;
 }
+
+.piloto {
+  max-width: 300px;
+  border: 2px solid red;
+}
