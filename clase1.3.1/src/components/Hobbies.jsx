@@ -1,6 +1,6 @@
 const Hobbies = () => {
   return (
-    <article>
+    <article className="card hobbies">
       <h2>Hobbies</h2>
       <ul>
         <li>F1</li>

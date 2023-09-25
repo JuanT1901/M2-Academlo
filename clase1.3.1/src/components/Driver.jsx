@@ -1,10 +1,14 @@
-const Driver = () => {
+const Driver = ({title, image}) => {
+  
+  //* Destructuring
+  // const {title} = props;
+
   return (
     <article className="piloto">
       <header>
-        <img src="/img/alonso.jpeg" alt="Fernando Alonso" />
+        <img src={image} alt={title} />
       </header>
-      <h4>Fernando Alonso</h4>
+      <h4>{title}</h4>
     </article>
   );
 };

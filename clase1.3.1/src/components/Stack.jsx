@@ -1,6 +1,6 @@
 const Stack = () => {
   return (
-    <article>
+    <article className="card stack">
       <h2>Mi Stack De Tecnologías</h2>
       <ul>
         <li>Javascript</li>

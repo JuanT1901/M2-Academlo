@@ -34,7 +34,8 @@
 }
 
 .card {
-  padding: 2em;
+  padding: 10px;
+  border-radius: 20px;
 }
 
 .read-the-docs {
@@ -44,4 +45,30 @@
 .piloto {
   max-width: 300px;
   border: 2px solid red;
+  margin: 20px;
+}
+
+.card.personal {
+  background-color: aquamarine;
+  color: black;
+}
+
+.card.hobbies {
+  background-color: aqua;
+  color: black;
+}
+
+.card.food {
+  background-color: antiquewhite;
+  color: black;
+}
+
+.card.stack {
+  background-color: purple;
+  color:white;
+}
+
+.containerDrivers {
+  display: grid;
+  gap: 20px
 }

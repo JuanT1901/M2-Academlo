@@ -1,6 +1,6 @@
 const Personal = () => {
   return (
-    <article>
+    <article className="card personal">
       <h2>Personal</h2>
       <ul>
         <li>Juan Torres</li>

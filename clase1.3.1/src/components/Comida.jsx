@@ -1,6 +1,6 @@
 const Comida = () => {
   return (
-    <article>
+    <article className="card food">
       <h2>Comida Favorita</h2>
       <ul>
         <li>Hamburguesas</li>
