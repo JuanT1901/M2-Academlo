@@ -34,52 +34,9 @@
 }
 
 .card {
-  padding: 10px;
-  border-radius: 20px;
+  padding: 2em;
 }
 
 .read-the-docs {
   color: #888;
-}
-
-.piloto {
-  max-width: 300px;
-  border: 2px solid red;
-  margin: 20px;
-}
-
-.card.personal {
-  background-color: aquamarine;
-  color: black;
-}
-
-.card.hobbies {
-  background-color: aqua;
-  color: black;
-}
-
-.card.food {
-  background-color: antiquewhite;
-  color: black;
-}
-
-.card.stack {
-  background-color: purple;
-  color:white;
-}
-
-.containerDrivers {
-  display: grid;
-  gap: 20px
-}
-
-.container {
-  display: grid;
-  gap: 20px;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-}
-
-.cardsita {
-  border-radius: 10%;
-  color: black;
 }
