@@ -1,29 +1,20 @@
 import { useState } from "react";
+import "./Bulb.css"
 
 const Bulb = () => {
 
   const [light, setLight] = useState(false);
-  const [option, setOption] = useState("OFF")
 
-
-  const handleTitle = () => {
-    if(option === "OFF") {
-      setOption("ON")
-      setLight(true)
-    } else {
-      setOption("OFF")
-      setLight(false)
-    }
+  const handleLight = () => {
+    setLight(!light)
   }
   
 
   return (
     <div>
       <h1>Light Bulb Exercise</h1>
-      <div className="Bulb" style={{backgroundColor: light ? "yellow" : "gray",
-      }}>
-      </div>
-      <button onClick={(handleTitle)}>{option}
+      <div className={`bulb ${light ? "on" : ""}`}></div>
+      <button className="option" onClick={handleLight}>{light ? "Off" : "On"}
       </button>
     </div>
   )
