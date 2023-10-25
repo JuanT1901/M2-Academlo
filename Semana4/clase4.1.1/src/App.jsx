@@ -1,24 +1,40 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import axios from "axios";
 import { BASE_URL } from "./constants/movies";
+import MovieList from "./components/MovieList";
 
 function App() {
-  useEffect(() => {
+  const [movies, setMovies] = useState([]);
+
+  const getAllMovies = () => {
     axios
-      .get(BASE_URL + "/movies/")
-      .then(({ data }) => console.log(data))
+      .get(`${BASE_URL}/movies/`)
+      .then(({ data }) => setMovies(data))
       .catch((err) => console.log(err));
+  };
+
+  const createMovie = (data, form) => {
+    axios
+      .post(`${BASE_URL}/movies/`, data)
+      .then(() => {
+        getAllMovies()
+        form.reset()
+      })
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    getAllMovies()
   }, []);
 
-  axios
-    .get("https://movies-crud-2.academlo.tech/movies/")
-    .then(({ data }) => console.log(data))
-    .catch((err) => console.log(err));
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData);
 
-    const handleSubmit = () => {
-      e.preventDefault()
-    }
+    createMovie(data, e.target);
+  };
 
   return (
     <main>
@@ -30,18 +46,20 @@ function App() {
         </div>
         <div>
           <label htmlFor="genre">Genero</label>
-          <input id="genre" type="text" />
+          <input id="genre" name="genre" type="text" />
         </div>
         <div>
           <label htmlFor="duration">Duración</label>
-          <input id="duration" type="text" />
+          <input id="duration" name="duration" type="text" />
         </div>
         <div>
           <label htmlFor="release_date">Lanzamiento</label>
-          <input id="release_date" type="date" />
+          <input id="release_date" name="release_date" type="date" />
         </div>
         <button type="submit">Crear película</button>
       </form>
+
+      <MovieList movies={movies} />
     </main>
   );
 }
