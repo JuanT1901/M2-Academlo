@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./App.css";
 import axios from "axios";
 import { BASE_URL } from "./constants/movies";
@@ -6,6 +6,19 @@ import MovieList from "./components/MovieList";
 
 function App() {
   const [movies, setMovies] = useState([]);
+  const [idMovieToEdit, setIdMovieToEdit] = useState(null);
+
+  const formRef = useRef(null);
+
+  const createMovie = (data, form) => {
+    axios
+      .post(`${BASE_URL}/movies/`, data)
+      .then(() => {
+        getAllMovies();
+        form.reset();
+      })
+      .catch((err) => console.log(err));
+  };
 
   const getAllMovies = () => {
     axios
@@ -14,32 +27,53 @@ function App() {
       .catch((err) => console.log(err));
   };
 
-  const createMovie = (data, form) => {
+  const deleteMovie = (id) => {
     axios
-      .post(`${BASE_URL}/movies/`, data)
-      .then(() => {
-        getAllMovies()
-        form.reset()
-      })
+      .delete(`${BASE_URL}/movies/${id}/`)
+      .then(() => getAllMovies())
       .catch((err) => console.log(err));
   };
 
-  useEffect(() => {
-    getAllMovies()
-  }, []);
+  const updateMovie = (data) => {
+    axios
+      .put(`${BASE_URL}/movies/${idMovieToEdit}/`, data)
+      .then(() => {
+        getAllMovies();
+        setIdMovieToEdit(null);
+        formRef.current.reset();
+      })
+      .catch((err) => console.log(err));
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData);
 
-    createMovie(data, e.target);
+    //Condición para saber si estamos o no editando
+    if (idMovieToEdit) {
+      updateMovie(data);
+    } else {
+      createMovie(data, e.target);
+    }
   };
+
+  const handleClickEdit = (movieToEdit) => {
+    formRef.current.name.value = movieToEdit.name;
+    formRef.current.genre.value = movieToEdit.genre;
+    formRef.current.duration.value = movieToEdit.duration;
+    formRef.current.release_date.value = movieToEdit.release_date;
+    setIdMovieToEdit(movieToEdit?.id);
+  };
+
+  useEffect(() => {
+    getAllMovies();
+  }, []);
 
   return (
     <main>
-      <form onSubmit={handleSubmit}>
-        <h2>Crear pelicula</h2>
+      <form ref={formRef} onSubmit={handleSubmit}>
+        <h2>{idMovieToEdit ? "Editar película" : "Crear película"}</h2>
         <div>
           <label htmlFor="name">Nombre</label>
           <input id="name" name="name" type="text" />
@@ -56,10 +90,16 @@ function App() {
           <label htmlFor="release_date">Lanzamiento</label>
           <input id="release_date" name="release_date" type="date" />
         </div>
-        <button type="submit">Crear película</button>
+        <button type="submit">
+          {idMovieToEdit ? "Guardar cambios" : "Crear película"}
+        </button>
       </form>
 
-      <MovieList movies={movies} />
+      <MovieList
+        movies={movies}
+        deleteMovie={deleteMovie}
+        handleClickEdit={handleClickEdit}
+      />
     </main>
   );
 }
