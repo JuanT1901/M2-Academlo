@@ -6,10 +6,12 @@ const Modal = ({
   handleSubmit,
   register,
   submit,
+  idCarToEdit,
+  errors,
 }) => {
   return (
     <section
-      className={`absolute top-0 bottom-0 left-0 right-0 bg-black/30 flex justify-center items-center px-3 transition-all duration-500 ${
+      className={`fixed top-0 bottom-0 left-0 right-0 bg-black/30 flex justify-center items-center px-3 transition-all duration-500 ${
         isShowModal ? "visible opacity-100" : "invisible opacity-0"
       }`}
     >
@@ -17,7 +19,9 @@ const Modal = ({
         onSubmit={handleSubmit(submit)}
         className="bg-white p-3 rounded-md grid gap-3 w-[min(100%,_270px)] relative"
       >
-        <h2 className="text-center text-lg font-semibold">Crear auto</h2>
+        <h2 className="text-center text-lg font-semibold">
+          {idCarToEdit ? "Editar auto" : "Crear auto"}
+        </h2>
         <button
           onClick={handleClosedModal}
           type="button"
@@ -33,8 +37,17 @@ const Modal = ({
             className="outline-none border px-2 py-1 rounded-sm"
             id="brand"
             type="text"
-            {...register("brand")}
+            {...register("brand", { 
+              required: {
+                value: true,
+                message: "Este campo es requerido"
+              } })}
           />
+          {errors.brand && (
+            <span className="text-xs text-red-500">
+              {errors.brand.message}
+            </span>
+          )}
         </div>
         <div className="grid gap-1">
           <label className="font-light" htmlFor="model">
@@ -84,7 +97,7 @@ const Modal = ({
           className="bg-green-400 p-2 px-4 uppercase font-semibold rounded-sm"
           type="submit"
         >
-          Crear
+          {idCarToEdit ? "Guardar" : "Crear"}
         </button>
       </form>
     </section>
